@@ -1,33 +1,50 @@
-# Real Time Firearm Detection from Closed Circuit Television videos
+# Real-Time Firearm Detection from CCTV Footage
 
-Problem Statement:
-A firearm detection system can enable early warning of potentially violent situations, which is critical for public safety. One technique to avoid these scenarios is to identify the presence of dangerous things in surveillance cameras, such as pistols and handguns. The model will be fed CCTV footage as an input, and the output of the project will be CCTV footage with firearms identified per frame within a bounding box.
+## Introduction
+In the interest of public safety, early detection of potentially violent situations is paramount. One proactive approach is to identify the presence of firearms in surveillance footage. This project aims to detect firearms in real-time from CCTV videos, highlighting them within bounding boxes for immediate attention.
 
-Dataset:
-We have used the Guns Object Detection dataset on Kaggle. The repository contains labeled images of guns taken from various sources. It consists of several images with text files.The image has been reconstructed into square images and were retained in the RGB/BGR format. Weapon photos are gathered and prepared for the dataset creation in order to build the dataset. This dataset contains photographs in the Images folder that are in jpeg format and are obtained from the internet. Another folder called Labels has text files in the txt format, each of which begins with a list of objects from the accompanying image and ends with the coordinates of the object. Training is done with this.
+## Problem Statement
+The goal is to develop a model that can process CCTV footage and identify firearms frame-by-frame, marking their presence with a bounding box. This early warning system can be instrumental in preventing potential threats and ensuring public safety.
 
-Algorithm:
-We will be making use of the YOLOv3 algorithm to detect firearms. We have the necessary dataset, which contains just one class. This dataset is further trained using the YOLOv3 (You Only Look Once) algorithm for the categorization of weaponry. The system will be able to identify the type of weapon present in the real-time input footage from the surveillance cameras (CCTVs) once the data has been effectively trained. A threat notice will be transmitted to the appropriate authorities if the weapon is found. The feature extraction and object localization processes in YOLOv3 are combined into a single, standardized block. Its YOLO (You Only Look Once) single-stage architecture produces a very quick surmise time. It predicts the bounding box coordinates and class probabilities for these boxes for an object using the complete image in a single case. Unlike previous techniques, which scan photos with a sliding window, YOLO passes the entire image through a convolutional neural network (CNN) and predicts the result in a single run. The Kaggle dataset is stored in the darknet folder and uploaded to drive.The uploaded dataset is further split into 70% training data and 30% testing data, and the photographs are organized into several folders that can be utilized to continue model training. The deep neural network module of OpenCV has a built-in implementation of Darknet, the deep learning framework from which YOLO is taught. With code we are loading the network and passing the YOLOv3 configuration and weights. An input image is read,to obtain the output a forward pass is conducted after setting the neural network's input. A prediction is created after processing the neural network's output. Low confidence detection is removed, and overlapping bounding boxes are deleted using non-max suppression in order to avoid multiple bounding boxes around the object and to get the optimum bounding box. If this weapon is detected in the image and alert is created.
+## Dataset
+We utilize the "Guns Object Detection" dataset available on [Kaggle](https://www.kaggle.com/datasets/issaisasank/guns-object-detection). This dataset comprises:
+- Labeled images of firearms sourced from various online platforms.
+- Square reconstructed images retained in RGB/BGR format.
+- The `Images` folder containing jpeg photographs.
+- The `Labels` folder with corresponding text files detailing object coordinates.
 
-Execution:
-The following are the steps for runnning the testing part(detection) part of the code. The training part of the code is in Training_YoloV3_firearm_detection.ipynb jupyter notebook. To generate the configuration and weights please run the notebook in google colab.
+Each text file starts with a list of objects from its corresponding image and concludes with the object's coordinates. This dataset serves as the foundation for our training.
 
-Requirements:
-Python 3.8 or above with all requirements dependencies installed. To install run:
+## Algorithm
+The YOLOv3 (You Only Look Once version 3) algorithm is our choice for firearm detection. Key highlights of our approach include:
+- Training on a dataset with a singular class: firearms.
+- Real-time identification of weapon types from CCTV footage post-training.
+- Immediate threat alerts to relevant authorities upon weapon detection.
+- YOLOv3's unique architecture that combines feature extraction and object localization into a unified block, ensuring rapid inference.
+- Unlike traditional methods that scan images with a sliding window, YOLO processes the entire image through a Convolutional Neural Network (CNN) in a single pass, predicting bounding box coordinates and class probabilities simultaneously.
+- Our dataset, housed in the `darknet` folder, is uploaded to a drive, segmented into 70% training and 30% testing data, and organized for continuous model training.
+- We leverage OpenCV's deep neural network module, which incorporates Darknet's deep learning framework (where YOLO originates). Our code loads the network, processes the YOLOv3 configuration and weights, and reads an input image. Post neural network processing, predictions are refined by removing low-confidence detections and applying non-max suppression to eliminate redundant bounding boxes, ensuring optimal object detection. Weapon detection triggers an alert.
 
-"$ pip3 install -r requirements.txt"
+## Execution
+Follow these steps to execute the firearm detection:
 
-Do not change any configuration files or weights files as they are generated by training YOLO v3 on gun dataset taken from Kaggle : https://www.kaggle.com/datasets/issaisasank/guns-object-detection
+### Requirements:
+- Python 3.8 or newer.
+- Ensure all dependencies are installed using: 
 
-The file main.py contains the code for detection firearm in three scenarios:
-1. Image
-2. Video
-3. Realtime
+$ pip3 install -r requirements.txt
 
-Execute the run.sh file for execution of code. The main.py will pick default inputs set in root directory for performing gun detection.
+- Avoid altering configuration or weight files; they result from training YOLO v3 on the Kaggle gun dataset.
 
-References:
-1. https://www.section.io/engineering-education/introduction-to-yolo-algorithm-for-object-detection/
-2. https://machinelearningmastery.com/how-to-perform-object-detection-with-yolov3-in-keras/
-3. https://pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv
+### Steps:
+1. The training code is available in the `Training_YoloV3_firearm_detection.ipynb` Jupyter notebook. Execute this notebook on Google Colab to generate the necessary configurations and weights.
+2. `main.py` facilitates firearm detection in three scenarios:
+   - Image
+   - Video
+   - Real-time
+3. For code execution, run the `run.sh` file. By default, `main.py` uses inputs from the root directory for gun detection.
 
+## References:
+1. [Introduction to YOLO Algorithm for Object Detection](https://www.section.io/engineering-education/introduction-to-yolo-algorithm-for-object-detection/)
+2. [Object Detection with YOLOv3 in Keras](https://machinelearningmastery.com/how-to-perform-object-detection-with-yolov3-in-keras/)
+3. [YOLO Object Detection with OpenCV](https://pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv)
